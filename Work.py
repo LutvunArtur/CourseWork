@@ -78,7 +78,7 @@ class Trade:
         result = None
         if self.data_res == 0:
             self.fst_ua += self.buy_someth * self.fst_course
-            if self.fst_ua < self.buy_someth:
+            if self.fst_usd< self.buy_someth:
                 print("You dont have enough money")
                 pass
             result = self.fst_ua
@@ -95,16 +95,18 @@ class Trade:
         result = None
         if self.data_res == 0:
             self.fst_ua += self.sell_someth * self.fst_course
+            self.fst_usd = self.fst_usd - self.sell_someth
             if self.fst_usd < self.sell_someth:
                 print("You dont have enough usd")
                 pass
-            result = self.fst_ua
+            result = self.fst_ua, self.fst_usd
         else:
             self.data_ua += self.sell_someth * self.data_course
+            self.data_usd = self.data_usd - self.sell_someth
             if self.data_usd < self.sell_someth:
                 print("You dont have enough usd")
                 pass
-            result = self.data_ua
+            result = self.data_ua,  self.data_usd
         upd_json_file(result)
         return result
 
