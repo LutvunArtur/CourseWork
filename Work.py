@@ -127,7 +127,7 @@ elif trader["SELL"]:
     if trader["ALL"]:
         trader_ex.sell_all()
         print(trader_ex.sell_all())
-    elif trader[buy_some]:
+    elif trader[sell_some]:
         trader_ex.buy_some()
         print(trader_ex.buy_some())
 
