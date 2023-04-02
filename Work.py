@@ -41,7 +41,8 @@ class Trade:
         return self.fst_course if data_res == 0 else self.data_course
 
     def available(self):
-        return f"{round(self.fst_ua, 2)} UA, {round(self.fst_usd, 2)} USD" if data_res == 0 else f"{round(self.data_ua, 2)} UA, {round(self.data_usd,  2)} USD"
+        return f"{round(self.fst_ua, 2)} UA, {round(self.fst_usd, 2)} USD" if data_res == 0 else \
+            f"{round(self.data_ua, 2)} UA, {round(self.data_usd,  2)} USD"
 
     def buy_all(self):
         if data_res == 0:
@@ -51,7 +52,7 @@ class Trade:
             self.data_usd += self.data_ua * self.data_course
             result = self.data_usd
         upd_json_file(result)
-        return result
+        return None
 
     def sell_all(self):
         if data_res == 0:
@@ -62,38 +63,27 @@ class Trade:
             self.data_ua = self.data_usd / self.data_course
             result = self.data_ua
         upd_json_file(result)
-        return result
+        return None
 
     @staticmethod
     def restart():
         upd_json_file(res)
 
     def buy_some(self, some_num):
+        result = self.data_ua
         if self.data_res == 0:
             upd_json_file(res)
-            self.fst_ua += some_num * self.fst_course
-            if self.fst_usd < some_num:
-                print("You dont have enough money")
-                pass
-            result = self.fst_ua
-        else:
             self.data_ua += some_num * self.data_course
             if self.data_ua < some_num:
                 print("You dont have enough money")
-                pass
             result = self.data_ua
         upd_json_file(result)
-        return result
+        return None
 
     def sell_some(self, some_num):
+        result = self.data_ua, self.data_usd
         if self.data_res == 0:
             upd_json_file(res)
-            self.fst_ua += some_num * self.fst_course
-            self.fst_usd = self.fst_usd - some_num
-            if self.fst_usd < some_num:
-                print("You dont have enough usd")
-            result = self.fst_ua, self.fst_usd
-        else:
             self.data_ua += some_num * self.data_course
             self.data_usd = self.data_usd - some_num
             if self.data_usd < some_num:
@@ -101,7 +91,7 @@ class Trade:
                 pass
             result = self.data_ua,  self.data_usd
         upd_json_file(result)
-        return result
+        return None
 
 
 trader_ex = Trade(data_res, res)
@@ -113,14 +103,14 @@ elif trader["action"] == "BUY":
     if trader["action"] == "ALL":
         trader_ex.buy_all()
         print("done")
-    elif trader["action"] == trader["num"]:
+    elif trader["num"]:
         trader_ex.buy_some(trader["num"])
         print("DONE")
 elif trader["action"] == "SELL":
     if trader["action"] == "ALL":
         trader_ex.sell_all()
         print("DONE")
-    elif trader["action"] == trader["num"]:
+    elif trader["num"]:
         trader_ex.buy_some(trader["num"])
         print("DONE")
 elif trader["action"] == "RESTART":
