@@ -19,7 +19,7 @@ with open(json_data_file, encoding="utf-8") as data_file:
 
 trader = ArgumentParser()
 trader.add_argument("action", type=str, nargs="?")
-trader.add_argument("num", type=str, nargs="?")
+trader.add_argument("num", nargs="?")
 trader = vars(trader.parse_args())
 
 
@@ -162,15 +162,15 @@ elif trader["action"] == "BUY":
     if trader["num"] == "ALL":
         upd_json_file(trader_ex.buy_all())
         print("done")
-    elif trader["num"] == int:
-        upd_json_file(trader_ex.buy_some(trader["num"]))
+    elif int(trader["num"]):
+        upd_json_file(trader_ex.buy_some(int(trader["num"])))
         print("done!")
 elif trader["action"] == "SELL":
     if trader["num"] == "ALL":
         upd_json_file(trader_ex.sell_all())
         print("done!")
-    elif trader["num"] == int:
-        upd_json_file(trader_ex.sell_some(trader["num"]))
+    elif int(trader["num"]):
+        upd_json_file(trader_ex.sell_some(int(trader["num"])))
         print("done!")
 elif trader["action"] == "RESTART":
     trader_ex.restart()
